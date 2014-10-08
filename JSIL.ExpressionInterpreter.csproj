@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B6269EA3-19B6-4684-AD1F-03562FD4AC55}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ExpressionInterpreter</RootNamespace>
+    <AssemblyName>JSIL.ExpressionInterpreter</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;FEATURE_CORE_DLR;MONO_INTERPRETER;FEATURE_DYNAMIC_EXPRESSION_VISITOR;FEATURE_SERIALIZATION</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;FEATURE_CORE_DLR;MONO_INTERPRETER;FEATURE_DYNAMIC_EXPRESSION_VISITOR;FEATURE_SERIALIZATION</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Microsoft.Dynamic\Ast\BinaryExpression.cs" />
+    <Compile Include="Microsoft.Dynamic\Ast\ConstantExpression.cs" />
+    <Compile Include="Microsoft.Dynamic\Ast\EmptyStatements.cs" />
+    <Compile Include="Microsoft.Dynamic\Ast\LightLambdaExpression.cs" />
+    <Compile Include="Microsoft.Dynamic\Ast\UnaryExpression.cs" />
+    <Compile Include="Microsoft.Dynamic\Ast\Utils.cs" />
+    <Compile Include="Microsoft.Dynamic\DebugOptions.cs" />
+    <Compile Include="Microsoft.Dynamic\Generation\CompilerHelpers.cs" />
+    <Compile Include="Microsoft.Dynamic\Generation\ConstantCheck.cs" />
+    <Compile Include="Microsoft.Dynamic\Generation\DelegateHelpers.cs" />
+    <Compile Include="Microsoft.Dynamic\Generation\DelegateHelpers.Generated.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\BranchLabel.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\AddInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\AndInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\ArithmeticInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\ArrayOperations.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\CallInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\CallInstruction.Generated.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\ComparisonInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\ConstantInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\ControlFlowInstructions.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\DivInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\DynamicInstructionN.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\DynamicInstructions.Generated.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\EqualInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\FieldOperations.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\GreaterThanInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\GreaterThanOrEqualInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\Instruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\InstructionFactory.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\InstructionList.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\LabelInfo.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\LessThanInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\LessThanOrEqualInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\LocalAccess.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\ModInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\MulInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\NegateInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\NotEqualInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\NotInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\NumericConvertInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\OrInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\ShlInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\ShrInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\StackOperations.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\SubInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\TypeOperations.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\XorInstruction.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\InterpretedFrame.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\Interpreter.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\LightCompiler.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\LightDelegateCreator.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\LightLambda.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\LightLambda.Generated.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\LocalVariables.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\LoopCompiler.cs" />
+    <Compile Include="Microsoft.Dynamic\Interpreter\RuntimeVariables.cs" />
+    <Compile Include="Microsoft.Dynamic\MultiRuntimeAwareAttribute.cs" />
+    <Compile Include="Microsoft.Dynamic\PerfTrack.cs" />
+    <Compile Include="Microsoft.Dynamic\Runtime\DynamicNull.cs" />
+    <Compile Include="Microsoft.Dynamic\Runtime\ExceptionHelpers.cs" />
+    <Compile Include="Microsoft.Dynamic\Runtime\ScriptingRuntimeHelpers.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\ArrayUtils.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\Assert.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\CacheDict.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\CollectionExtensions.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\CollectionUtils.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\ContractUtils.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\DynamicUtils.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\ExceptionFactory.Generated.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\ExceptionUtils.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\HybridReferenceDictionary.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\ListEqualityComparer.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\ReferenceEqualityComparer.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\ReflectionUtils.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\ThreadLocal.cs" />
+    <Compile Include="Microsoft.Dynamic\Utils\TypeUtils.cs" />
+    <Compile Include="Microsoft.Scripting\ArgumentTypeException.cs" />
+    <Compile Include="Microsoft.Scripting\InvalidImplementationException.cs" />
+    <Compile Include="Microsoft.Scripting\PlatformAdaptationLayer.cs" />
+    <Compile Include="Microsoft.Scripting\Runtime\NotNullAttribute.cs" />
+    <Compile Include="Microsoft.Scripting\Runtime\ParamDictionaryAttribute.cs" />
+    <Compile Include="Microsoft.Scripting\Stubs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stub.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="JSIL.ExpressionInterpreter.dll.jsilconfig">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
