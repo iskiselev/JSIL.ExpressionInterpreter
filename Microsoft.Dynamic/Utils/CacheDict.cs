@@ -14,8 +14,8 @@
  * ***************************************************************************/
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 
 namespace Microsoft.Scripting.Utils {
@@ -27,7 +27,7 @@ namespace Microsoft.Scripting.Utils {
     /// </summary>
     public class CacheDict<TKey, TValue> {
         private readonly Dictionary<TKey, KeyInfo> _dict = new Dictionary<TKey, KeyInfo>();
-        private readonly LinkedList<TKey> _list = new LinkedList<TKey>();
+        private readonly CustomLinkedList<TKey> _list = new CustomLinkedList<TKey>();
         private readonly int _maxSize;
 
         /// <summary>
@@ -44,9 +44,11 @@ namespace Microsoft.Scripting.Utils {
         /// </summary>
         public bool TryGetValue(TKey key, out TValue value) {
             KeyInfo storedValue;
-            if (_dict.TryGetValue(key, out storedValue)) {
-                LinkedListNode<TKey> node = storedValue.List;
-                if (node.Previous != null) {
+            if (_dict.TryGetValue(key, out storedValue))
+            {
+                CustomLinkedListNode<TKey> node = storedValue.List;
+                if (node.Previous != null)
+                {
                     // move us to the head of the list...
                     _list.Remove(node);
                     _list.AddFirst(node);
@@ -71,14 +73,14 @@ namespace Microsoft.Scripting.Utils {
                 _list.Remove(keyInfo.List);
             } else if (_list.Count == _maxSize) {
                 // we've reached capacity, remove the last used element...
-                LinkedListNode<TKey> node = _list.Last;
+                CustomLinkedListNode<TKey> node = _list.Last;
                 _list.RemoveLast();
                 bool res = _dict.Remove(node.Value);
                 Debug.Assert(res);
             }
             
             // add the new entry to the head of the list and into the dictionary
-            LinkedListNode<TKey> listNode = new LinkedListNode<TKey>(key);
+            CustomLinkedListNode<TKey> listNode = new CustomLinkedListNode<TKey>(key);
             _list.AddFirst(listNode);
             _dict[key] = new CacheDict<TKey, TValue>.KeyInfo(value, listNode);
         }
@@ -103,12 +105,137 @@ namespace Microsoft.Scripting.Utils {
 
         private struct KeyInfo {
             internal readonly TValue Value;
-            internal readonly LinkedListNode<TKey> List;
+            internal readonly CustomLinkedListNode<TKey> List;
 
-            internal KeyInfo(TValue value, LinkedListNode<TKey> list) {
+            internal KeyInfo(TValue value, CustomLinkedListNode<TKey> list)
+            {
                 Value = value;
                 List = list;
             }
         }
+    }
+
+    internal class CustomLinkedList<T> : IEnumerable<T>
+    {
+        private CustomLinkedListNode<T> _firstNode;
+        private CustomLinkedListNode<T> _lastNode;
+        private int _count;
+        public int Count { get { return _count; } }
+
+        public void Remove(CustomLinkedListNode<T> node)
+        {
+            if (node == null)
+            {
+                throw new ArgumentNullException("node is null");
+            }
+
+            if (node.List != this)
+            {
+                throw new InvalidOperationException("Node belongs to another list");
+            }
+
+            if (node.Previous != null)
+            {
+                node.Previous.Next = node.Next;
+            }
+            else
+            {
+                _firstNode = node.Next;
+            }
+
+            if (node.Next != null)
+            {
+                node.Next.Previous = node.Previous;
+            }
+            else
+            {
+                _lastNode = node.Previous;
+            }
+
+            _count--;
+
+            node.List = null;
+            node.Next = null;
+            node.Previous = null;
+        }
+
+        public CustomLinkedListNode<T> Last
+        {
+            get { return _lastNode; }
+        }
+
+        public void AddFirst(CustomLinkedListNode<T> node)
+        {
+            if (node.List != null)
+            {
+                throw new InvalidOperationException("Node belongs to another list");
+            }
+
+            if (_firstNode != null)
+            {
+                _firstNode.Previous = node;
+            }
+
+            node.List = this;
+            node.Next = _firstNode;
+            _count++;
+
+            _firstNode = node;
+
+            if (_lastNode == null)
+            {
+                _lastNode = node;
+            }
+        }
+
+        public void RemoveLast()
+        {
+            if (_count == 0)
+            {
+                throw new InvalidOperationException("List empty");
+            }
+
+            var node = _lastNode;
+            _lastNode = _lastNode.Previous;
+            _lastNode.Next = null;
+            node.List = null;
+            node.Previous = null;
+
+            _count--;
+
+            if (_lastNode == null)
+            {
+                _firstNode = null;
+            }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var current = _firstNode;
+            while (current != null)
+            {
+                yield return current.Value;
+                current = current.Next;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
+    internal class CustomLinkedListNode<T>
+    {
+        public CustomLinkedListNode(T value)
+        {
+            Value = value;
+        }
+
+        public CustomLinkedListNode<T> Previous { get; internal set; }
+        public CustomLinkedListNode<T> Next { get; internal set; }
+        public CustomLinkedList<T> List { get; internal set; }
+
+        public T Value { get; private set; }
     }
 }
