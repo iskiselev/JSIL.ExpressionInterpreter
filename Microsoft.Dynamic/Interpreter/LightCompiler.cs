@@ -1255,7 +1255,7 @@ namespace Microsoft.Scripting.Interpreter {
             PopLabelBlock(LabelScopeKind.Try);
         }
 
-        private void CompileDynamicExpression(Expression expr) {
+        /*private void CompileDynamicExpression(Expression expr) {
             var node = (DynamicExpression)expr;
 
             foreach (var arg in node.Arguments) {
@@ -1263,7 +1263,7 @@ namespace Microsoft.Scripting.Interpreter {
             }
 
             _instructions.EmitDynamic(node.DelegateType, node.Binder);
-        }
+        }*/
 
         private void CompileMethodCallExpression(Expression expr) {
             var node = (MethodCallExpression)expr;
@@ -1683,7 +1683,7 @@ namespace Microsoft.Scripting.Interpreter {
                 case ExpressionType.Block: CompileBlockExpression(expr, expr.Type == typeof(void)); break;
                 case ExpressionType.DebugInfo: CompileDebugInfoExpression(expr); break;
                 case ExpressionType.Decrement: CompileUnaryExpression(expr); break;
-                case ExpressionType.Dynamic: CompileDynamicExpression(expr); break;
+                //case ExpressionType.Dynamic: CompileDynamicExpression(expr); break;
                 case ExpressionType.Default: CompileDefaultExpression(expr); break;
                 case ExpressionType.Extension: CompileExtensionExpression(expr); break;
                 case ExpressionType.Goto: CompileGotoExpression(expr); break;

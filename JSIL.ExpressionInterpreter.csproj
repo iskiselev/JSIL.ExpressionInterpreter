@@ -62,8 +62,6 @@
     <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\ConstantInstruction.cs" />
     <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\ControlFlowInstructions.cs" />
     <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\DivInstruction.cs" />
-    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\DynamicInstructionN.cs" />
-    <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\DynamicInstructions.Generated.cs" />
     <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\EqualInstruction.cs" />
     <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\FieldOperations.cs" />
     <Compile Include="Microsoft.Dynamic\Interpreter\Instructions\GreaterThanInstruction.cs" />

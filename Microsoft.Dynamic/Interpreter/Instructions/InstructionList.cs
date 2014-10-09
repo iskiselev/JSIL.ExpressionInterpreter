@@ -829,7 +829,7 @@ namespace Microsoft.Scripting.Interpreter {
         }
 
         #endregion
-
+/*
         #region Dynamic
 
         public void EmitDynamic(Type type, CallSiteBinder binder) {
@@ -931,9 +931,9 @@ namespace Microsoft.Scripting.Interpreter {
             }
             return factory(binder);
         }
-
+        
         #endregion
-
+*/
         #region Control Flow
 
         private static readonly RuntimeLabel[] EmptyRuntimeLabels = new RuntimeLabel[] { new RuntimeLabel(Interpreter.RethrowOnReturn, 0, 0) };
