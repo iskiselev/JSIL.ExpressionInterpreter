@@ -146,7 +146,9 @@ namespace Microsoft.Scripting.Interpreter {
 
             // we don't have permission for restricted skip visibility dynamic methods, use the slower Delegate.CreateDelegate.
             var targetMethod = runMethod.IsGenericMethodDefinition ? runMethod.MakeGenericMethod(paramTypes) : runMethod;
-            return _runCache[delegateType] = lambda => targetMethod.CreateDelegate(delegateType, lambda);
+            Func<LightLambda, Delegate> final = lambda => targetMethod.CreateDelegate(delegateType, lambda);
+            _runCache[delegateType] = final;
+            return final;
         }
     
         //TODO enable sharing of these custom delegates
