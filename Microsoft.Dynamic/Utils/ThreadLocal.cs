@@ -35,7 +35,7 @@ namespace Microsoft.Scripting.Utils
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")] // TODO
         public sealed class StorageInfo
         {
-            public T Value;                                // the current value for the owning thread
+            public object Value;                                // the current value for the owning thread
 
             internal StorageInfo()
             {

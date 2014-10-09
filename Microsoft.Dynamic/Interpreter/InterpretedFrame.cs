@@ -200,7 +200,7 @@ namespace Microsoft.Scripting.Interpreter {
 #else
         internal InterpretedFrameThreadLocal.StorageInfo Enter() {
             var currentFrame = InterpretedFrame.CurrentFrame.GetStorageInfo();
-            _parent = currentFrame.Value;
+            _parent = (InterpretedFrame)currentFrame.Value;
             currentFrame.Value = this;
             return currentFrame;
         }
