@@ -24,7 +24,7 @@ using Microsoft.Scripting.Utils;
 namespace Microsoft.Scripting.Interpreter {
     internal abstract class EqualInstruction : ComparisonInstruction {
         // Perf: EqualityComparer<T> but is 3/2 to 2 times slower.
-        private static Instruction _Reference, _Boolean, _SByte, _Int16, _Char, _Int32, _Int64, _Byte, _UInt16, _UInt32, _UInt64, _Single, _Double;
+        private static Instruction _Reference, _Boolean, _SByte, _Int16, _Char, _Int32, _Int64, _Byte, _UInt16, _UInt32, _UInt64, _Single, _Double, _String;
         private static Instruction _BooleanLifted, _SByteLifted, _Int16Lifted, _CharLifted, _Int32Lifted, _Int64Lifted,
             _ByteLifted, _UInt16Lifted, _UInt32Lifted, _UInt64Lifted, _SingleLifted, _DoubleLifted;
 
@@ -120,6 +120,14 @@ namespace Microsoft.Scripting.Interpreter {
             }
         }
 
+        internal sealed class EqualString : EqualInstruction
+        {
+            protected override object DoCalculate(object l, object r)
+            {
+                return (string)l == (string)r;
+            }
+        }
+
         internal sealed class EqualReference : EqualInstruction {
             protected override object Calculate (object l, object r)
             {
@@ -151,6 +159,7 @@ namespace Microsoft.Scripting.Interpreter {
                 case TypeCode.Single: return _Single ?? (_Single = new EqualSingle());
                 case TypeCode.Double: return _Double ?? (_Double = new EqualDouble());
 
+                case TypeCode.String: return _String ?? (_String = new EqualString());
                 case TypeCode.Object:
                     if (!type.IsValueType()) {
                         return _Reference ?? (_Reference = new EqualReference());
